@@ -44,29 +44,53 @@
 # method to pick an orange
 
 class OrangeTree
-  attr_accessor :age
-  attr_accessor :height
+  attr_accessor :age, :height, :oranges
   def initialize (age, height)
     @age= 0
     @height=0
     @oranges=[]
+    @orange_diameter=0
   end
 
   def agetree
     @age= @age+1
     @height= @height+1
-    @diameter=@diameter+1
-    if @age==50
-      puts "alas, the tree, she is dead"
-   else @age %5==0 
-    (1..10).each do |make|
-      orange=Orange.new(@diameter)
+    
+    
+    until @age==50
+      @age %5==0 
+     @orange_diameter = @orange_diameter + 1
+      fresh_orange = Orange.new(@orange_diameter)
+      (1..10).each do |make|
+        @oranges.push(fresh_orange)
+      end
+        else
+       puts "alas, the tree, she is dead"
+      end
 
+    end
+
+    
+    
+    
+    
     return age
-
+  
   end
 
+   def pickorange
+ picked  =oranges.pop
+ return picked 
+end
 
+def dead?
+  if self.age < 50
+    return false
+  else
+    return true
+  end
+end
+  
 
 
 end
@@ -79,18 +103,58 @@ class Orange
 end
 
 class Basket
+  attr_accessor :basket
   def initialize
-    basket= []
+    @basket= []
   end
+def receive(picked)
+  @basket.push(picked)
 end
 
+def average
+  diameters= @basket.map do |orange|
+    orange.diameter 
+  end
+  totaldiameters=diameters.reduce(0) do |sum, diameter|
+    sum+diameter
+  end
+  totaldiameters/@basket.length
+
+end
+
+def size
+  return @basket.length
+end
+
+end
+# arr =  [1, 2, 3, 4, 5, 6]
+# arr.pop #=> 6
+# arr #=> [1, 2, 3, 4, 5]
 
 
+basket=Basket.new
 tree=OrangeTree.new(0, 0)
 tree.agetree
 tree.agetree
 tree.agetree
 tree.agetree
 tree.agetree
-p tree.height
+tree.agetree
+tree.agetree
+tree.agetree
+tree.agetree
+tree.agetree
+# # p tree.height
+# p tree.oranges
+basket.receive(tree.pickorange)
+basket.receive(tree.pickorange)
+basket.receive(tree.pickorange)
+basket.receive(tree.pickorange)
+basket.receive(tree.pickorange)
+basket.receive(tree.pickorange)
 
+puts "The basket is #{basket.size} with an average diameter of #{basket.average}. #{tree.age}"
+require "pry"
+binding.pry
+tree.dead? 
+p basket.average
