@@ -42,119 +42,158 @@
 # needs size
 # method to calculate average diameter of oranges
 # method to pick an orange
+require 'pry'
 
-class OrangeTree
-  attr_accessor :age, :height, :oranges
-  def initialize (age, height)
-    @age= 0
+class FruitTree
+  def initialize(age, height)
+    @age=0
     @height=0
-    @oranges=[]
-    @orange_diameter=0
+    @fruits = []
+
+
+  end
+
+
+  def grow_fruit
+    if @age% @fruit_grows==0 && @age<@deathage
+      @fruits << Fruit.new(@diameter)
+      @diameter += @fruit_growth
+    end 
+   
   end
 
   def agetree
-    @age= @age+1
-    @height= @height+1
-    
-    
-    until @age==50
-      @age %5==0 
-     @orange_diameter = @orange_diameter + 1
-      fresh_orange = Orange.new(@orange_diameter)
-      (1..10).each do |make|
-        @oranges.push(fresh_orange)
-      end
-        else
-       puts "alas, the tree, she is dead"
-      end
+    @age += 1
+    @height += @growth_rate
+    self.grow_fruit
+    return @age
+  end
+end
 
-    end
 
-    
-    
-    
-    
-    return age
+class OrangeTree < FruitTree
+  attr_accessor :age, :height, :oranges, :orange_diameter
+  def initialize (age, height)
+    super(age, height)
+    @growth_rate=3
+    @fruit_grows=5
+    @diameter= 1
+    # @fruit=Orange
+    @deathage= 50
+  end
+
+#   def grow_oranges
+#     if @age %5==0 && @age<40
+#        @oranges <<Orange.new(orange_diameter)
+#        @orange_diameter+=1 
+#     end
+     
+#   end
+
+
+#   def agetree
+#     @age +=1
+#     @height +=3
+#     @self.grow_oranges
+#   end
+
+ 
+#   def pickorange
+#     picked  =oranges.pop
+#     return picked 
+#   end
+# end
+
+
+# class AppleTree < Fruit
+#   attr_accessor :age, :height, :apples, :apple_diameter
+#   def initialize (age, height)
+#     @age= 0
+#     @height=0
+#     @apples=[]
+#     @apple_diameter=0.5
+#   end
+
+#   def grow_fruit
+#     if @age%2==0 && @age<50
+#       @apples << Apple.new(@apple_diameter)
+#       @apple_diameter += @fruit_growth
+#     end 
+   
+  end
+
+#   def agetree
+#     @age += 1
+#     @height += 1
+#     self.grow_apples
+#     return
+#   end
+       
+#   def pickapple
+#     picked  =apples.pop
+#     return picked 
+#   end
+# end
+
+# class Apple
+#   attr_accessor :diameter
+#   def initialize (diameter)
+#     @diameter=diameter
+#   end
+# end
+
+# class Orange
+#   attr_accessor :diameter
+#   def initialize (diameter)
+#     @diameter=diameter
+#   end
+# end
+
+# class Basket
+#   attr_accessor :basket
+#   def initialize
+#     @basket= []
+#   end
+ 
+#   def receive(picked)
+#     @basket.push(picked)
+#   end
+
+#   def average
+#     diameters= @basket.map do |orange|
+#       orange.diameter 
+#     end
   
-  end
+#     totaldiameters=diameters.reduce(0) do |sum, diameter|
+#       sum+diameter
+#     end
+#     totaldiameters/@basket.length
+#   end
 
-   def pickorange
- picked  =oranges.pop
- return picked 
-end
+#   def size
+#     return @basket.length
+#   end
 
-def dead?
-  if self.age < 50
-    return false
-  else
-    return true
-  end
-end
-  
-
-
-end
-
-class Orange
-  attr_accessor :diameter
-  def initialize (diameter)
-    @diameter=diameter
-  end
-end
-
-class Basket
-  attr_accessor :basket
-  def initialize
-    @basket= []
-  end
-def receive(picked)
-  @basket.push(picked)
-end
-
-def average
-  diameters= @basket.map do |orange|
-    orange.diameter 
-  end
-  totaldiameters=diameters.reduce(0) do |sum, diameter|
-    sum+diameter
-  end
-  totaldiameters/@basket.length
-
-end
-
-def size
-  return @basket.length
-end
-
-end
+# end
 # arr =  [1, 2, 3, 4, 5, 6]
 # arr.pop #=> 6
 # arr #=> [1, 2, 3, 4, 5]
 
+# appletree=AppleTree.new(0,0)
+# appletree.agetree
 
-basket=Basket.new
+
+# basket=Basket.new
 tree=OrangeTree.new(0, 0)
 tree.agetree
-tree.agetree
-tree.agetree
-tree.agetree
-tree.agetree
-tree.agetree
-tree.agetree
-tree.agetree
-tree.agetree
-tree.agetree
+binding.pry
+
+
+
 # # p tree.height
 # p tree.oranges
-basket.receive(tree.pickorange)
-basket.receive(tree.pickorange)
-basket.receive(tree.pickorange)
-basket.receive(tree.pickorange)
-basket.receive(tree.pickorange)
-basket.receive(tree.pickorange)
 
-puts "The basket is #{basket.size} with an average diameter of #{basket.average}. #{tree.age}"
-require "pry"
-binding.pry
-tree.dead? 
-p basket.average
+
+# puts "The basket is #{basket.size} with an average diameter of #{basket.average}. #{tree.age}"
+
+p appletree.apples
